@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Comparator.*;
+import static java.util.Comparator.comparing;
 
 public class SomeComparisons {
 
@@ -16,7 +16,6 @@ public class SomeComparisons {
 
     public static List<Person> people = Arrays.asList(rich, james, josh, martin);
 
-
     public static void main(String[] args) {
         System.out.println(people);
         sortByAgeOldWay();
@@ -24,6 +23,7 @@ public class SomeComparisons {
         sortByNameUsingMethod();
         sortByHeightUsingField();
         sortByAgeThenHeight();
+        sortByAgeThenHeightReversed();
         System.out.println(people);
     }
 
@@ -52,37 +52,8 @@ public class SomeComparisons {
         Collections.sort(people, comparing(Person::getAge).thenComparing(Person::getHeight));
     }
 
-}
-
-class Person {
-
-    public String name;
-    public int age;
-    public double height;
-
-    public Person(String name, int age, double height) {
-        this.name = name;
-        this.age = age;
-        this.height = height;
+    private static void sortByAgeThenHeightReversed() {
+        Collections.sort(people, comparing(Person::getAge).thenComparing(comparing(Person::getHeight).reversed()));
     }
 
-    public static int compareNames(Person lhs, Person rhs) {
-        return lhs.name.compareTo(rhs.name);
-    }
-
-    public String toString() {
-        return String.format("%-6s %d %.1f", name, age, height);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public double getHeight() {
-        return height;
-    }
 }
